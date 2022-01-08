@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Order;
+use App\Entity\OrderDetail;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,14 +24,27 @@ class OrderController extends AbstractController
     }
 
     #[Route('/new', name: 'order_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, OrderRepository $orderRepository): Response
     {
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //création de la commande
+            $order->setReference(date('Ymd') . $order->getId());
+            $order->setState('En cours de validation');
+            $order->setUser($this->getUser());
             $entityManager->persist($order);
+            $entityManager->flush();
+
+            //récupération de la commande créée enregistrement 
+            //des produits pour le détail de la commande
+            $orderCreated = $orderRepository->findOneBy(['user' => $this->getUser(), 'total' => $order->getTotal()]);
+            $orderDetail = new OrderDetail();
+            $form = $this->createForm(OrderDetailType::class, $orderDetail);
+            $form->handleRequest($request);
+            $entityManager->persist($orderDetail);
             $entityManager->flush();
 
             return $this->redirectToRoute('order_index', [], Response::HTTP_SEE_OTHER);
@@ -71,7 +85,7 @@ class OrderController extends AbstractController
     #[Route('/{id}', name: 'order_delete', methods: ['POST'])]
     public function delete(Request $request, Order $order, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$order->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $order->getId(), $request->request->get('_token'))) {
             $entityManager->remove($order);
             $entityManager->flush();
         }

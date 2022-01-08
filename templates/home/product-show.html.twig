@@ -1,14 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}product show{% endblock %}
+{% block title %}
+	{{ parent() }}
+	-
+	{{product.name}}
+{% endblock %}
 
 {% block body %}
-
-<div class="example-wrapper">
-<pre>
-    {{ dump() }}
-</pre>
-
-  
-</div>
+	<div class="container content-container">
+		<div class="row justify-content-center">
+			<div class="col-12 my-5">
+				<h1>Détail produit</h1>
+			</div>
+			<div class="col-4 text-end">
+				<img src="" alt="image d'un {{ product.category.category }}">
+				<p>blablabla</p>
+			</div>
+			<div class="col-4 d-flex flex-wrap">
+				<div class="col-9 my-2">{{ product.name }}</div>
+				<div class="col-3 my-2">
+					{{ product.name|number_format(2, '.', ',')  }}
+					€
+				</div>
+				<div class="col-12 my-2">{{ product.description }}</div>
+				<div class="col-12 d-flex my-2">
+					<div class="col-3">
+						<label for="formGroupExampleInput" class="form-label">Quantité</label>
+					</div>
+					<div class="col-3">
+						<input type="number" class="form-control col-3" id="formGroupExampleInput" placeholder="1">
+					</div>
+				</div>
+				<div class="btn btn-primary">Ajouter au panier</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}

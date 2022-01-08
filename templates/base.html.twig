@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			{% block title %}MySkateshop{% endblock %}
 		</title>
@@ -18,7 +19,7 @@
 
 		{% block body %}{% endblock %}
 
-		{% include "components/footer.html.twig" %}
+		{{ render(controller('App\\Controller\\FooterController::generateFooter')) }}
 
 		{% block javascripts %}
 			{{ encore_entry_script_tags('app') }}

@@ -1,20 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}
+	{{ parent() }}
+	- Accueil
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/patrick/wild/titre/myskateshop/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/patrick/wild/titre/myskateshop/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+	<div class="container content-container">
+		<h1 class="col text-center text-primary my-5">Bienvenue chez MySkateshop votre boutique en ligne</h1>
+		<p class="col text-center my-3 mx-auto px-5 w-75">Vous trouverez ici le type de skate que vous rechercher que ce soit pour vous promener en ville ou encore faire des figures comme vos Skaters préférés. Visitez les catégories qui vous correspondent.</p>
+		<div class="row row-cols-2 my-5">
+			{% for category in categories %}
+				{% set col = '' %}
+				{% if categories|length is odd and loop.last %}
+						{% set col = '-12' %}
+				{% endif %}
+				<a class="col{{col}} text-decoration-none g-3" href="{{ path("app_category_page", {'slug': category.slug}) }}">
+					<div class="card bg-dark text-white">
+						<img src="..." class="card-img" alt="photo de {{category.category}}" height="400">
+						<div class="card-img-overlay d-flex justify-content-center align-items-center">
+							<h5 class="card-title py-4 px-5 bg-light text-dark">{{category.category}}</h5>
+						</div>
+					</div>
+				</a>
+			{% endfor %}
+		</div>
+	</div>
 {% endblock %}

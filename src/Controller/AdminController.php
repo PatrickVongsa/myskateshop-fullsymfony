@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\CategoryRepository;
+use App\Repository\OrderRepository;
+use App\Repository\ProductRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,10 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     #[Route('/admin', name: 'admin')]
-    public function index(): Response
-    {
+    public function index(
+        CategoryRepository $categoryRepository,
+        OrderRepository $orderRepository,
+        ProductRepository $productRepository,
+        UserRepository $userRepository
+    ): Response {
         return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+            'categories' => $categoryRepository->findAll(),
+            'orders' => $orderRepository->findAll(),
+            'products' => $productRepository->findAll(),
+            'users' => $userRepository->findAll(),
         ]);
     }
 }

@@ -12,7 +12,6 @@ class NavbarController extends AbstractController
         CategoryRepository $categoryRepository
     ): Response {
         return $this->render('components/navbar.html.twig', [
-            'test'=>'test',
             'categories' => $categoryRepository->findAll(),
             ]);
     }

@@ -6,6 +6,7 @@ use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class ProductType extends AbstractType
 {
@@ -19,8 +20,16 @@ class ProductType extends AbstractType
             ->add('stock')
             ->add('minStock')
             ->add('isVisible')
-            ->add('slug')
-        ;
+            ->add('category', null, [
+                'choice_label' => 'category',
+                'label' => 'Catégorie'
+            ])
+            // ->add('slug')
+            ->add('imageFile', VichFileType::class, [
+                'required'      => false,
+                'allow_delete'  => false, // not mandatory, default is true
+                'download_uri' => false, // not mandatory, default is true
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

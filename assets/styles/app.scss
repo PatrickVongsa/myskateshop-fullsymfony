@@ -4,7 +4,16 @@
 body {
     background-color: white;
 }
+.hero-section {
+    height: 500px;
+    background-position: center;
+}
 
 .content-container {
     min-height: calc(100vh - 300px);
+}
+
+.img-container {
+    max-height: 400px;
+    overflow: hidden;
 }

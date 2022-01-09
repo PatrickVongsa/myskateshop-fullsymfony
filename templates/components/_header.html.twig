@@ -1,0 +1,6 @@
+<header class="hero-section" style="background-image: linear-gradient(rgba(0, 0, 0, 0.25),rgba(0, 0, 0, 0.25)), url('build/images/header-image.jpg');">
+	{{ render(controller('App\\Controller\\NavbarController::generateNavbar', {'bg': false} )) }}
+	<div class="row justify-content-center">
+		{# {% include "component/_searchBar.html.twig" %} #}
+	</div>
+</header>

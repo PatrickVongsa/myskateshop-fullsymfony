@@ -1,0 +1,44 @@
+<footer class="container-fluid bg-secondary">
+	<div class="row  justify-content-center mx-5">
+		<div class="col col-lg-4 text-center text-light mt-4 mb-2">
+			<h3>Plan du site</h3>
+			<ul class="list-unstyled">
+				<li>
+					<a class="text-decoration-none text-light" href="{{ path("app_home") }}">Accueil</a>
+				</li>
+				{% for category in categories %}
+					<li>
+						<a class="text-decoration-none text-light" href="{{ path("app_category_page", {'slug': category.slug}) }}">{{ category.category }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+		<div class="col col-lg-4 d-flex flex-column text-center text-light">
+			<div class="mb-3">
+				<img src="/build/images/logo.svg" alt="Logo MySkateshop" width="280"/>
+				<p class="fs-5 fw-bold">votre boutique en ligne</p>
+			</div>
+			<div class="mb-3">
+				<p class="fw-bold">Retrouvez-nous sur les réseaux sociaux</p>
+				<a href="https://www.facebook.com">
+					<img src="/build/images/facebook.png" alt="Logo Facebook" class="mx-1" width="25" height="25">
+				</a>
+				<a href="https://www.instagram.com">
+					<img src="/build/images/instagram.png" alt="Logo Instagram" class="mx-1" width="25" height="25">
+				</a>
+				<a href="https://www.twitter.com">
+					<img src="/build/images/twitter.png" alt="Logo Twitter" class="mx-1" width="25" height="25">
+				</a>
+				<a href="https://www.linkedin.com">
+					<img src="/build/images/linkedin.svg" alt="Logo LinkedIn" class="mx-1" width="25" height="25">
+				</a>
+			</div>
+		</div>
+	</div>
+	<hr class="dropdown-divider text-light">
+	<div class="row">
+		<div class="col text-center text-center text-light my-2">
+			<h5>Tous droits réservés MySkateshop - 2022</h5>
+		</div>
+	</div>
+</footer>

@@ -9,9 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 class NavbarController extends AbstractController
 {
     public function generateNavbar(
+        bool $bg=true,
         CategoryRepository $categoryRepository
     ): Response {
-        return $this->render('components/navbar.html.twig', [
+        return $this->render('components/_navbar.html.twig', [
+            'bg' => $bg,
             'categories' => $categoryRepository->findAll(),
             ]);
     }

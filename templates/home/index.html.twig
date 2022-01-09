@@ -16,10 +16,10 @@
 						{% set col = '-12' %}
 				{% endif %}
 				<a class="col{{col}} text-decoration-none g-3" href="{{ path("app_category_page", {'slug': category.slug}) }}">
-					<div class="card bg-dark text-white">
-						<img src="..." class="card-img" alt="photo de {{category.category}}" height="400">
+					<div class="card bg-dark text-white img-container">
+						<img src="{{ vich_uploader_asset(category, 'imageFile') }}" class="card-img img-fluid" alt="photo de {{category.category}}">
 						<div class="card-img-overlay d-flex justify-content-center align-items-center">
-							<h5 class="card-title py-4 px-5 bg-light text-dark">{{category.category}}</h5>
+							<h5 class="card-title py-4 px-5 bg-dark bg-opacity-75 text-light">{{category.category}}</h5>
 						</div>
 					</div>
 				</a>

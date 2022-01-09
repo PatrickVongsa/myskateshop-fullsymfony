@@ -13,7 +13,7 @@
 				<h1>Détail produit</h1>
 			</div>
 			<div class="col-4 text-end">
-				<img src="" alt="image d'un {{ product.category.category }}">
+				<img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="image d'un {{ product.category.category }}">
 				<p>blablabla</p>
 			</div>
 			<div class="col-4 d-flex flex-wrap">

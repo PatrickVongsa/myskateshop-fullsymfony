@@ -11,7 +11,7 @@ class FooterController extends AbstractController
     public function generateFooter(
         CategoryRepository $categoryRepository
     ): Response {
-        return $this->render('components/footer.html.twig', [
+        return $this->render('components/_footer.html.twig', [
             'categories' => $categoryRepository->findAll(),
             ]);
     }

@@ -19,12 +19,6 @@ class HomeController extends AbstractController
             'categories' => $categoryRepository->findAll(),
         ]);
     }
-  
-    #[Route('/panier', name: 'app_checkout')]
-    public function checkout(): Response
-    {
-        return $this->render('home/checkout.html.twig');
-    }
 
     #[Route('/mon-compte', name: 'app_account')]
     public function myAccount(): Response

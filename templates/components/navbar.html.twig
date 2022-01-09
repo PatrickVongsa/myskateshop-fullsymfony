@@ -15,6 +15,9 @@
 				<li class="nav-item">
 					<a class="nav-link" href="{{ path("admin") }}">Administration</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ path("cart_index") }}">panier</a>
+				</li>
 				{% for category in categories %}
 					<li>
 						<a  class="nav-link" href="{{ path("app_category_page", {'slug': category.slug}) }}">{{ category.category }}</a>

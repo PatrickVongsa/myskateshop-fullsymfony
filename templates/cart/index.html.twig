@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{parent()}}
+	- Panier
+{% endblock %}
+
+{% block body %}
+	<div class="container content-container">
+		<div class="row">
+			<div class="col-12">
+				<h1 class="text-primary my-5">Mon panier</h1>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col d-flex flex-wrap flex-column justify-content-end">
+					<div class="card mb-1" style="max-width: 540px;">
+						<div class="row g-0">
+							<div class="col-md-4">
+								<img src="..." class="img-fluid rounded-start" alt="...">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<h5 class="card-title">product title</h5>
+									<p class="card-text">product quantity</p>
+									<p class="card-text">product total price</p>
+									<p class="card-text">cart add</p>
+									<p class="card-text">cart remove</p>
+									<p class="card-text">cart delete</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card" style="max-width: 540px;">
+						<div class="card-body">
+							Votre panier est vide.
+						</div>
+					</div>
+				</div>
+				<div class="col">faire la commande</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

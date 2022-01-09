@@ -8,18 +8,13 @@
 
 {% block body %}
 	<div class="container content-container">
-		<div class="row row-cols-4 g-3 my-5">
+		<div class="mt-5">
+			<h1 class="text-primary">{{category.category}}</h1>
+		</div>
+		<div class="row row-cols-4 g-3 mt-2 mb-5">
 			{% for product in category.products %}
-				<a class="text-decoration-none" href="{{ path("app_product_detail", {'category_slug': category.slug, 'product_slug': product.slug}) }}">
-					<div class="col card" style="width: 250px;">
-						<img src="{{ vich_uploader_asset(product, 'imageFile') }}" class="card-img-top" alt="image {{product.name}}" height="250">
-						<div class="card-body">
-							<h5 class="card-title">{{product.name}}</h5>
-							<p class="card-text">{{product.price|number_format(2, '.', ',') }}
-								€</p>
-							<div class="btn btn-primary">Ajouter panier</div>
-						</div>
-					</div>
+				<a class="col text-decoration-none" href="{{ path("app_product_detail", {'category_slug': category.slug, 'product_slug': product.slug}) }}">
+					{% include "components/_card-product-show.html.twig" %}
 				</a>
 			{% endfor %}
 		</div>

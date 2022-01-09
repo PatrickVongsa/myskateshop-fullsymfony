@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Product;
 use App\Repository\ProductRepository;
+use phpDocumentor\Reflection\Types\Void_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -15,7 +16,7 @@ class CartController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(SessionInterface $sessionInterface, ProductRepository $productRepository): Response
     {
-        $cart = $sessionInterface->get("panier", []);
+        $cart = $sessionInterface->get("cart", []);
         $dataCart = [];
         $total = 0;
 
@@ -38,7 +39,7 @@ class CartController extends AbstractController
     public function add(Product $product, SessionInterface $sessionInterface): Response
     {
         //onrécupère le panier actuel sinon on lui attribut un panier vide
-        $cart = $sessionInterface->get("panier", []);
+        $cart = $sessionInterface->get("cart", []);
 
         //on récupère l'id du produit
         $id = $product->getId();
@@ -59,7 +60,7 @@ class CartController extends AbstractController
     public function remove(Product $product, SessionInterface $sessionInterface): Response
     {
         //onrécupère le panier actuel sinon on lui attribut un panier vide
-        $cart = $sessionInterface->get("panier", []);
+        $cart = $sessionInterface->get("cart", []);
 
         //on récupère l'id du produit
         $id = $product->getId();
@@ -82,7 +83,7 @@ class CartController extends AbstractController
     public function delete(Product $product, SessionInterface $sessionInterface): Response
     {
         //onrécupère le panier actuel sinon on lui attribut un panier vide
-        $cart = $sessionInterface->get("panier", []);
+        $cart = $sessionInterface->get("cart", []);
 
         //on récupère l'id du produit
         $id = $product->getId();
@@ -97,11 +98,11 @@ class CartController extends AbstractController
         return $this->redirectToRoute('cart_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/clear', name: 'cart_clear')]
+    #[Route('/clear', name: 'clear')]
     public function clear(SessionInterface $sessionInterface): Response
     {
         //on supprime le cookie "panier"
-        $sessionInterface->remove("panier");
+        $sessionInterface->remove("cart");
 
         return $this->redirectToRoute('cart_index', [], Response::HTTP_SEE_OTHER);
     }

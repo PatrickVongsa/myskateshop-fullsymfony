@@ -6,12 +6,14 @@ use App\Entity\OrderDetail;
 use App\Form\OrderDetailType;
 use App\Repository\OrderDetailRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/order/detail')]
+#[IsGranted('ROLE_SUPER_ADMIN')]
 class OrderDetailController extends AbstractController
 {
     #[Route('/', name: 'order_detail_index', methods: ['GET'])]

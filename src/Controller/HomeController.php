@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Repository\CategoryRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,9 +22,13 @@ class HomeController extends AbstractController
     }
 
     #[Route('/mon-compte', name: 'app_account')]
+    #[IsGranted('ROLE_USER')]
     public function myAccount(): Response
     {
-        return $this->render('home/account.html.twig');
+        $user = $this->getUser();
+        return $this->render('home/account.html.twig', [
+            'user' => $user
+        ]);
     }
 
     #[Route('/boutique/{slug}', name: 'app_category_page')]

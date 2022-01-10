@@ -11,22 +11,22 @@
 		</button>
 		<div class="flex-grow-1"></div>
 		<div class="collapse navbar-collapse justify-content-end" id="navbarScroll">
-			<ul class="navbar-nav me-3 my-2 my-lg-0 navbar-nav-scroll fs-5" style="--bs-scroll-height: 100px;">
+			<ul class="navbar-nav me-3 my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
 				{% for category in categories %}
-					<li class="nav-item">
-						<a  class="nav-link active" href="{{ path("app_category_page", {'slug': category.slug}) }}">{{ category.category }}</a>
+					<li class="nav-item me-2">
+						<a  class="nav-link" href="{{ path("app_category_page", {'slug': category.slug}) }}">{{ category.category }}</a>
 					</li>
 				{% endfor %}
-				<li class="nav-item">
-					<a class="nav-link active" href="{{ path("app_account") }}">Mon compte</a>
+				<li class="nav-item me-2">
+					<a class="nav-link" href="{{ path("app_account") }}">Mon compte</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="{{ path("admin") }}">Administration</a>
+				<li class="nav-item me-2">
+					<a class="nav-link" href="{{ path("admin") }}">Administration</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link active" href="{{ path("cart_index") }}">panier</a>
+				<li class="nav-item me-2">
+					<a class="nav-link" href="{{ path("cart_index") }}">panier</a>
 				</li>
-				<li class="nav-item dropdown">
+				<li class="nav-item me-2 dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						Link
 					</a>

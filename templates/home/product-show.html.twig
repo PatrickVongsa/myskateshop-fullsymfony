@@ -8,30 +8,48 @@
 
 {% block body %}
 	<div class="container content-container">
-		<div class="row justify-content-center">
+		<div class="row justify-content-center mb-5">
 			<div class="col-12 my-5">
 				<h1>Détail produit</h1>
 			</div>
-			<div class="col-4 text-end">
-				<img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="image d'un {{ product.category.category }}">
-				<p>blablabla</p>
+			<div class="col-4 text-center">
+				<img class="border border-secondary rounded-2 p-2" src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="image d'un {{ product.category.category }}" width="400" height="400">
 			</div>
-			<div class="col-4 d-flex flex-wrap">
-				<div class="col-9 my-2">{{ product.name }}</div>
-				<div class="col-3 my-2">
-					{{ product.name|number_format(2, '.', ',')  }}
-					€
-				</div>
-				<div class="col-12 my-2">{{ product.description }}</div>
-				<div class="col-12 d-flex my-2">
-					<div class="col-3">
-						<label for="formGroupExampleInput" class="form-label">Quantité</label>
+			<div class="col-4">
+				<div class="row my-2">
+					<div class="col-8">
+						<h4>
+							{{ product.name }}
+						</h4>
 					</div>
-					<div class="col-3">
-						<input type="number" class="form-control col-3" id="formGroupExampleInput" placeholder="1">
+					<div class="col-4">
+						<h4 class="text-primary">
+							{{ product.price|number_format(2, '.', ',')  }}
+							€
+						</h4>
 					</div>
 				</div>
-				<a class="btn btn-primary" href="{{path('cart_add', {'id': product.id }) }}">Ajouter au panier</a>
+				<div class="row mt-2 mb-5">
+					<div class="col">
+					<h5>Description :</h5>
+					<p>
+						{{ product.description }}
+					</p>
+					</div>
+				</div>
+				<div class="row my-2">
+					<div class="col-12 d-flex mb-3">
+						<div class="col-3">
+							<label for="formGroupExampleInput" class="form-label">Quantité</label>
+						</div>
+						<div class="col-3">
+							<input type="number" class="form-control col-3" id="formGroupExampleInput" placeholder="1">
+						</div>
+					</div>
+					<div class="col	">
+						<a class="btn btn-primary" href="{{path('cart_add', {'id': product.id }) }}">Ajouter au panier</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

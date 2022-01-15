@@ -1,5 +1,7 @@
 {% set bgColor = '' %}
-{% if bg %} {% set bgColor = 'bg-primary' %} {% endif %}
+{% if bg %}
+	{% set bgColor = 'bg-primary' %}
+{% endif %}
 
 <nav class="navbar navbar-expand-lg navbar-dark {{bgColor}}">
 	<div class="container-fluid">
@@ -11,47 +13,80 @@
 		</button>
 		<div class="flex-grow-1"></div>
 		<div class="collapse navbar-collapse justify-content-end" id="navbarScroll">
-			<ul class="navbar-nav me-3 my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-				{% for category in categories %}
-					<li class="nav-item me-2">
-						<a  class="nav-link" href="{{ path("app_category_page", {'slug': category.slug}) }}">{{ category.category }}</a>
-					</li>
-				{% endfor %}
-				<li class="nav-item me-2">
-					<a class="nav-link" href="{{ path("app_account") }}">Mon compte</a>
+			<ul class="navbar-nav me-3 my-2 my-lg-0 navbar-nav-scroll fs-5" style="--bs-scroll-height: 100px;">
+				<li class="nav-item me-3">
+					<a class="nav-link  active" href="{{ path("app_shop") }}">Skateshop</a>
 				</li>
-				<li class="nav-item me-2">
-					<a class="nav-link" href="{{ path("admin") }}">Administration</a>
-				</li>
-				<li class="nav-item me-2">
-					<a class="nav-link" href="{{ path("cart_index") }}">panier</a>
-				</li>
-				<li class="nav-item me-2 dropdown">
-					<a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Link
+				<li class="nav-item dropdown me-3">
+					<a class="nav-link  active dropdown-toggle" href="" id="categories-ropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Catégories
 					</a>
-					<ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-
-						<li>
-							<a class="dropdown-item" href="#">Action</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="#">Another action</a>
-						</li>
+					<ul class="dropdown-menu" aria-labelledby="categories-ropdown">
+						{% for category in categories %}
+							<li class="nav-item">
+								<a class="nav-link text-dark" href="{{ path("app_category_page", {'slug': category.slug}) }}">{{ category.category }}</a>
+							</li>
+						{% endfor %}
+					</ul>
+				</li>
+				{% if app.user %}
+					<li class="nav-item dropdown  me-3">
+						<a class="nav-link active dropdown-toggle" href="#" id="account-dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+							{{ app.user.username }}
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="account-dropdown">
+							<li class="nav-item">
+								<a class="dropdown-item" href="{{ path("app_account") }}">Mon compte</a>
+							</li>
+							{% if is_granted('ROLE_ADMIN') %}
+							<li class="nav-item">
+								<a class="dropdown-item" href="{{ path("admin") }}">Administration</a>
+							</li>
+							{% endif %}
+							<li><hr class="dropdown-divider"></li>
+							<li>
+								<a class="dropdown-item" href="{{ path("app_logout") }}">Se deconnecter</a>
+							</li>
+						</ul>
+					</li>
+				{% else %}
+					<li class="nav-item me-3">
+						<a class="nav-link  active" href="{{ path("app_login") }}">Se connecter</a>
+					</li>
+				{% endif %}
+				<li class="nav-item me-2 dropdown">
+					<a class="nav-link bg-light rounded-pill active dropdown-toggle d-flex justify-content-around align-items-center text-dark" href="#" id="cart-dropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" style="width: 110px;">
+						<i class="bi bi-cart"></i>
+						<span class="">
+							{{dataCart|length}}
+						</span>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarScrollingDropdown">
+						{% for product in dataCart %}
+							<li class="m-1">
+								{% include "components/_cart-product-show.html.twig" %}
+							</li>
+						{% else %}
+							<div class="card m-1" style="max-width: 540px;">
+								<div class="card-body">
+									Panier vide...
+								</div>
+							</div>
+						{% endfor %}
 						<li><hr class="dropdown-divider"></li>
-						<li>
-							<a class="dropdown-item" href="#">Something else here</a>
+						<li class="ps-2">
+							<a class="btn btn-primary" href="{{path('cart_index')}}">Voir mon panier</a>
 						</li>
 					</ul>
 				</li>
 				{# <li class="nav-item">
-					<a class="nav-link disabled">Link</a>
-				</li> #}
+																					<a class="nav-link disabled">Link</a>
+																				</li> #}
 			</ul>
 			{# <form class="d-flex">
-				<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-				<button class="btn btn-outline-success" type="submit">Search</button>
-			</form> #}
+																<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+																<button class="btn btn-outline-success" type="submit">Search</button>
+															</form> #}
 		</div>
 	</div>
 </nav>

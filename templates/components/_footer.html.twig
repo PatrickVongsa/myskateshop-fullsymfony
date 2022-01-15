@@ -6,11 +6,23 @@
 				<li>
 					<a class="text-decoration-none text-light" href="{{ path("app_home") }}">Accueil</a>
 				</li>
+				<li>
+					<a class="text-decoration-none text-light" href="{{ path("app_shop") }}">Skateshop</a>
+				</li>
 				{% for category in categories %}
 					<li>
 						<a class="text-decoration-none text-light" href="{{ path("app_category_page", {'slug': category.slug}) }}">{{ category.category }}</a>
 					</li>
 				{% endfor %}
+				{% if app.user %}
+				<li>
+					<a class="text-decoration-none text-light" href="{{ path("app_logout") }}">Se déconnecter</a>
+				</li>
+				{% else %}
+				<li>
+					<a class="text-decoration-none text-light" href="{{ path("app_login") }}">Se connecter</a>
+				</li>
+				{% endif %}
 			</ul>
 		</div>
 		<div class="col col-lg-4 d-flex flex-column text-center text-light">

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Repository\CategoryRepository;
+use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,6 +29,15 @@ class HomeController extends AbstractController
         $user = $this->getUser();
         return $this->render('home/account.html.twig', [
             'user' => $user
+        ]);
+    }
+
+    #[Route('/boutique', name: 'app_shop')]
+    public function shopShow(CategoryRepository $categoryRepository, ProductRepository $productRepository): Response
+    {
+        return $this->render('home/shop-show.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+            'products' => $productRepository->findAll(),
         ]);
     }
 

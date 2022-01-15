@@ -16,6 +16,8 @@
 				<a class="col text-decoration-none" href="{{ path("app_product_detail", {'category_slug': category.slug, 'product_slug': product.slug}) }}">
 					{% include "components/_card-product-show.html.twig" %}
 				</a>
+			{% else %}
+				<p>Pas de produits trouvés.</p>
 			{% endfor %}
 		</div>
 	</div>

@@ -1,21 +1,51 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}
+	{{parent()}}
+	- Créer un compte
+{% endblock %}
 
 {% block body %}
-    {% for flashError in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-    {% endfor %}
+<div class="container">
+		{% for flash_error in app.flashes('verify_email_error') %}
+			<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+		{% endfor %}
+		<div class="row justify-content-center">
+			{{ form_start(registrationForm, {
+						attr: {
+							class: 'col-11 col-md-7 border border-3 rounded-3 mt-5',
+							'data-text': 'Création de votre compte en cours ...'
+						}
+					}) }}
+						<h1 class="h3 mt-3 mb-5 font-weight-normal text-center text-primary title">Créer un compte</h1>
+						<div class="form-floating mb-3">
+							{{ form_errors(registrationForm.email) }}
+							{{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+							{{ form_label(registrationForm.email) }}
+						</div>
+						<div class="form-floating mb-3">
+							{{ form_errors(registrationForm.username) }}
+							{{ form_widget(registrationForm.username, {'attr': {'class': 'form-control'}}) }}
+							{{ form_label(registrationForm.username) }}
+						</div>
+						<div class="form-floating mb-3">
+							{{ form_errors(registrationForm.plainPassword) }}
+							{{ form_widget(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+							{{ form_label(registrationForm.plainPassword.first) }}
+						</div>
+						<div class="form-floating mb-3">
+							{{ form_widget(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+							{{ form_label(registrationForm.plainPassword.second) }}
+						</div>
+			{# {{ form_row(registrationForm.agreeTerms, {'label': 'Accepter les CGU'}) }} #}
 
-    <h1>Register</h1>
+			<button type="submit" class="btn btn-primary my-4">Créer mon compte</button>
+			{{ form_end(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+			<div class="col-10 col-md-7 text-center mt-3 mb-5">
+				<p>Vous avez déjà un compte</p>
+				<a href="{{ path('app_login') }}" class="btn border border-primary border-2 rounded-pill">Se connecter</a>
+			</div>
+		</div>
+	</div>
 {% endblock %}

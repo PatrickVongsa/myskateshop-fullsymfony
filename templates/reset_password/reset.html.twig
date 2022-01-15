@@ -5,15 +5,27 @@
 
 {% block body %}
 	<div class="container content-container">
-		<div class="row justify-content-center my-5">
-			<div class="col-6">
-				<h1>Reset your password</h1>
+		<div class="row justify-content-center">
+			{{ form_start(resetForm, {
+						attr: {
+							class: 'col-11 col-md-7 border border-3 rounded-3 mt-5',
+							'data-text': 'Création de votre compte en cours ...'
+						}
+					}) }}
+			<h1 class="h3 mt-3 mb-5 font-weight-normal text-center text-primary title">Réinitialiser votre mot de passe</h1>
 
-				{{ form_start(resetForm) }}
-				{{ form_row(resetForm.plainPassword) }}
-				<button class="btn btn-primary">Réinitialiser mot de passe</button>
-				{{ form_end(resetForm) }}
+			<div class="form-floating mb-3">
+				{{ form_errors(resetForm.plainPassword) }}
+				{{ form_widget(resetForm.plainPassword.first, {'attr': {'class': 'form-control'}}) }}
+				{{ form_label(resetForm.plainPassword.first) }}
 			</div>
+			<div class="form-floating mb-3">
+				{{ form_widget(resetForm.plainPassword.second, {'attr': {'class': 'form-control'}}) }}
+				{{ form_label(resetForm.plainPassword.second) }}
+			</div>
+
+			<button type="submit" class="btn btn-primary my-4">Créer mon compte</button>
+			{{ form_end(resetForm) }}
 		</div>
 	</div>
 {% endblock %}

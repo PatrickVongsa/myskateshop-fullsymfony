@@ -6,23 +6,25 @@
 {% block body %}
 	<div class="container content-container">
 		<div class="row justify-content-center my-5">
-			<div class="col-6">
+			<div class="col-11 col-md-7 border border-3 rounded-3 mt-5">
 				{% for flashError in app.flashes('reset_password_error') %}
 					<div class="alert alert-danger" role="alert">{{ flashError }}</div>
 				{% endfor %}
-				<h1>Reset your password</h1>
+				<h1 class="h3 mt-3 mb-5 font-weight-normal text-primary title">Reset your password</h1>
 
 				{{ form_start(requestForm) }}
-                <div class="form-floating mb-3">
-				{{ form_row(requestForm.email) }}
-                </div>
-				<div>
+				<div class="form-floating mb-3">
+					{{ form_errors(requestForm.email) }}
+					{{ form_widget(requestForm.email, {'attr': {'class': 'form-control'}}) }}
+					{{ form_label(requestForm.email) }}
+				</div>
+				<div class="mb-3">
 					<small>
-						Renseigner votre adresse email afin de recevoir un mail pour la réinitialisation de votre mot de passe.
+						Entrez votre email et vous recevrez un lien pour réinitialiser votre mot de passe.
 					</small>
 				</div>
 
-				<button class="btn btn-primary">Send password reset email</button>
+				<button class="btn btn-primary mb-4">Envoyer l'email</button>
 				{{ form_end(requestForm) }}
 			</div>
 		</div>

@@ -1,6 +1,17 @@
-<header class="hero-section" style="background-image: linear-gradient(rgba(0, 0, 0, 0.25),rgba(0, 0, 0, 0.25)), url('build/images/header-image.jpg');">
+<header class="hero-section container-fluid" style="background-image: linear-gradient(rgba(0, 0, 0, 0.25),rgba(0, 0, 0, 0.25)), url('build/images/header-image.jpg');">
 	{{ render(controller('App\\Controller\\NavbarController::generateNavbar', {'bg': false} )) }}
-	<div class="row justify-content-center">
-		{# {% include "component/_searchBar.html.twig" %} #}
+	<div class="row justify-content-center align-items-center h-100">
+		<div class="col-5">
+			{{ form_start(searchForm) }}
+			<div class="input-group mb-3">
+				{{ form(searchForm.name) }}
+			{{ form_rest(searchForm) }}
+				<button class="btn btn-lg btn-primary" type="submit">
+					<i class="bi bi-search"></i>
+				</button>
+			</div>
+			{{ form_end(searchForm) }}
+		</div>
 	</div>
+
 </header>

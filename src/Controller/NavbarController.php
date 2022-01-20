@@ -19,13 +19,15 @@ class NavbarController extends AbstractController
         $cart = $sessionInterface->get("cart", []);
         $dataCart = [];
         $total = 0;
-
+        $quantityproduct = 0;
+        
         foreach ($cart as $id => $quantity) {
             $product = $productRepository->find($id);
             $dataCart[] = [
                 'product' => $product,
                 'quantity' => $quantity,
             ];
+            $quantityproduct += $quantity;
             $total += $product->getPrice() * $quantity;
         }
 
@@ -33,6 +35,7 @@ class NavbarController extends AbstractController
             'categories' => $categoryRepository->findAll(),
             'dataCart' => $dataCart,
             'total' => $total,
+            'quantity' => $quantityproduct,
             'bg' => $bg,
             ]);
     }

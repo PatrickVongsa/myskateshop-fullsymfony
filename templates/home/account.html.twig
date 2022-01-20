@@ -49,7 +49,7 @@
 															<strong>{{orderDetail.product.name}}</strong>
 														</td>
 														<td>{{orderDetail.quantity}}</td>
-														<td>{{orderDetail.price|number_format(2, '.', ',') }}
+														<td>{{orderDetail.price|number_format(2, ',', ' ') }}
 															€</td>
 													</tr>
 												{% endfor %}
@@ -58,7 +58,7 @@
 												<tr>
 													<th colspan="2" class="text-end">Total de la commande :
 													</th>
-													<th scope="col">{{order.total|number_format(2, '.', ',') }}
+													<th scope="col">{{order.total|number_format(2, ',', ' ') }}
 														€</th>
 												</tr>
 											</tfoot>
@@ -85,7 +85,7 @@
 															<strong>{{orderDetail.product.name}}</strong>
 														</td>
 														<td>{{orderDetail.quantity}}</td>
-														<td>{{orderDetail.price|number_format(2, '.', ',') }}
+														<td>{{orderDetail.price|number_format(2, ',', ' ') }}
 															€</td>
 													</tr>
 												{% endfor %}
@@ -94,7 +94,7 @@
 												<tr>
 													<th colspan="2" class="text-end">Total de la commande :
 													</th>
-													<th scope="col">{{order.total|number_format(2, '.', ',') }}
+													<th scope="col">{{order.total|number_format(2, ',', ' ') }}
 														€</th>
 												</tr>
 											</tfoot>

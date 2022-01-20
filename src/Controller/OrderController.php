@@ -60,6 +60,8 @@ class OrderController extends AbstractController
                 $product = $productRepository->find($id);
                 $price = $product->getPrice() * $quantity;
 
+                $product->setStock($product->getStock() - $quantity);
+
                 $orderDetail
                     ->setProduct($product)
                     ->setOrderId($orderCreated)
@@ -74,22 +76,16 @@ class OrderController extends AbstractController
             }
             return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
-        return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
-
-
-        // return $this->renderForm('order/new.html.twig', [
-        //     'order' => $order,
-        //     'form' => $form,
-        // ]);
+        return $this->redirectToRoute('app_shop', [], Response::HTTP_SEE_OTHER);
     }
 
-    // #[Route('/{id}', name: 'order_show', methods: ['GET'])]
-    // public function show(Order $order): Response
-    // {
-    //     return $this->render('order/show.html.twig', [
-    //         'order' => $order,
-    //     ]);
-    // }
+    #[Route('/{id}', name: 'order_show', methods: ['GET'])]
+    public function show(Order $order): Response
+    {
+        return $this->render('order/show.html.twig', [
+            'order' => $order,
+        ]);
+    }
 
     #[Route('/{id}/edit', name: 'order_edit', methods: ['GET', 'POST'])]
     #[IsGranted("ROLE_USER")]
@@ -110,14 +106,14 @@ class OrderController extends AbstractController
         ]);
     }
 
-    // #[Route('/{id}', name: 'order_delete', methods: ['POST'])]
-    // public function delete(Request $request, Order $order, EntityManagerInterface $entityManager): Response
-    // {
-    //     if ($this->isCsrfTokenValid('delete' . $order->getId(), $request->request->get('_token'))) {
-    //         $entityManager->remove($order);
-    //         $entityManager->flush();
-    //     }
+    #[Route('/{id}', name: 'order_delete', methods: ['POST'])]
+    public function delete(Request $request, Order $order, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $order->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($order);
+            $entityManager->flush();
+        }
 
-    //     return $this->redirectToRoute('order_index', [], Response::HTTP_SEE_OTHER);
-    // }
+        return $this->redirectToRoute('order_index', [], Response::HTTP_SEE_OTHER);
+    }
 }

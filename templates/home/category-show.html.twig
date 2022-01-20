@@ -13,9 +13,11 @@
 		</div>
 		<div class="row row-cols-4 g-3 mt-2 mb-5">
 			{% for product in category.products %}
+			{% if product.isVisible == true and product.stock > 0 %}
 				<a class="col text-decoration-none" href="{{ path("app_product_detail", {'category_slug': category.slug, 'product_slug': product.slug}) }}">
 					{% include "components/_card-product-show.html.twig" %}
 				</a>
+			{% endif %}
 			{% else %}
 				<p>Pas de produits trouvés.</p>
 			{% endfor %}

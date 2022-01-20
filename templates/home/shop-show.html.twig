@@ -3,13 +3,50 @@
 {% block title %}
 	{{ parent() }}
 	-
-	Boutique
+						Boutique
 {% endblock %}
 
 {% block body %}
 	<div class="container content-container">
-		<pre>
-            {{ dump() }}
-        </pre>
+		<div class="mt-5">
+			<h1 class="text-primary">Skateshop</h1>
+			{% if not searched is empty %}
+				{% if results %}
+					<p>
+						Résultats de recherche
+						<span class="small">({{products|length}})</span>
+					</p>
+				{% else %}
+
+					<p>
+						Pas de produits trouvés suite à votre recherche. Tous les produits sont affichés
+						<span class="small">({{products|length}})</span>
+					</p>
+				{% endif %}
+			{% endif %}
+		</div>
+		<div class="row justify-content-center align-items-center h-100">
+			<div class="col-6">
+				{{ form_start(searchForm) }}
+				<div class="input-group mb-3">
+					{{ form(searchForm.name) }}
+						{{ form_rest(searchForm) }}
+						<button class="btn btn-lg btn-primary" type="submit">
+							<i class="bi bi-search"></i>
+						</button>
+					</div>
+					{{ form_end(searchForm) }}
+				</div>
+			</div>
+			<div class="row row-cols-4 g-3 mt-2 mb-5">
+				{% for product in products %}
+					<a class="col text-decoration-none" href="{{ path("app_product_detail", {'category_slug': product.category.slug, 'product_slug': product.slug}) }}">
+						{% include "components/_card-product-show.html.twig" %}
+					</a>
+				{% else %}
+					<p>Pas de produits trouvés.</p>
+				{% endfor %}
+			</div>
+		</div>
 	</div>
 {% endblock %}

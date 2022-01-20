@@ -17,7 +17,7 @@
 				</p>
 				<p class="card-text">
 					Prix total :
-					{{product.product.price * product.quantity}}</p>
+					{{ (product.product.price * product.quantity)|number_format(2, ',', ' ') }} €</p>
 				<a class="btn btn-danger" href="{{path('cart_delete', {'id': product.product.id }) }}">
 					<i class="bi bi-trash-fill"></i>
 				</a>

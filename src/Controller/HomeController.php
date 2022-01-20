@@ -4,21 +4,28 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Form\SearchProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+use function PHPUnit\Framework\isEmpty;
 
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
     public function index(CategoryRepository $categoryRepository): Response
     {
+        $searchForm = $this->createForm(SearchProductType::class);
+
         return $this->render('home/index.html.twig', [
             'categories' => $categoryRepository->findAll(),
+            'searchForm' => $searchForm->createView()
         ]);
     }
 
@@ -33,11 +40,35 @@ class HomeController extends AbstractController
     }
 
     #[Route('/boutique', name: 'app_shop')]
-    public function shopShow(CategoryRepository $categoryRepository, ProductRepository $productRepository): Response
+    public function shopShow(Request $request, ProductRepository $productRepository): Response
     {
+        $searchForm = $this->createForm(SearchProductType::class, null);
+        $searchForm->handleRequest($request);
+        $formData = $searchForm->getData();
+        $searchedName = '';
+        if (!empty($formData)) {
+            $searchedName = $formData['name'] != null ? $formData['name'] : '';
+        }
+        $products = [];
+        $results = false;
+
+        if ($searchForm->isSubmitted() && $searchForm->isValid()) {
+            // dd($searchedName);
+            $products = $productRepository->findNameLike($searchedName);
+        }
+
+        if (empty($products)) {
+            $products = $productRepository->findProductAvailable();
+            shuffle($products);
+        } else {
+            $results = true;
+        }
+        
         return $this->render('home/shop-show.html.twig', [
-            'categories' => $categoryRepository->findAll(),
-            'products' => $productRepository->findAll(),
+            'products' => $products,
+            'searchForm' => $searchForm->createView(),
+            'results' => $results,
+            'searched' => $searchedName
         ]);
     }
 

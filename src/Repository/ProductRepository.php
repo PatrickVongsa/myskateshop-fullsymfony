@@ -19,6 +19,34 @@ class ProductRepository extends ServiceEntityRepository
         parent::__construct($registry, Product::class);
     }
 
+    public function findNameLike(string $name): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p
+            FROM App\Entity\Product p
+            WHERE p.name LIKE :name AND p.stock > 0 AND  p.isVisible = 1'
+        )->setParameter('name', '%' . $name . '%');
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
+    public function findProductAvailable(): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p
+            FROM App\Entity\Product p
+            WHERE p.stock > 0 AND  p.isVisible = 1'
+        );
+
+        // returns an array of Product objects
+        return $query->getResult();
+    }
+
     // /**
     //  * @return Product[] Returns an array of Product objects
     //  */

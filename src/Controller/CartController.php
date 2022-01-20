@@ -6,6 +6,7 @@ use App\Entity\Product;
 use App\Repository\ProductRepository;
 use phpDocumentor\Reflection\Types\Void_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,8 +37,14 @@ class CartController extends AbstractController
     }
 
     #[Route('/add/{id}', name: 'add')]
-    public function add(Product $product, SessionInterface $sessionInterface): Response
+    public function add(Product $product, SessionInterface $sessionInterface)
     {
+        //récuperer les quantités envoyé par le formulaire
+        // dd($_POST);
+        $quantity = 0;
+        if (isset($_POST['quantity']) && $_POST['quantity'] > 0) {
+            $quantity = $_POST['quantity'];
+        }
         //onrécupère le panier actuel sinon on lui attribut un panier vide
         $cart = $sessionInterface->get("cart", []);
 
@@ -46,9 +53,9 @@ class CartController extends AbstractController
 
         //on verifie si l'id est présent si oui on incrémente si non on lui attribut qté = 1
         if (!empty($cart[$id])) {
-            $cart[$id]++;
+            $quantity > 0 ? $cart[$id]+= $quantity : $cart[$id]++;
         } else {
-            $cart[$id] = 1;
+            $quantity > 0 ? $cart[$id] = $quantity : $cart[$id] = 1;
         }
 
         $sessionInterface->set('cart', $cart);

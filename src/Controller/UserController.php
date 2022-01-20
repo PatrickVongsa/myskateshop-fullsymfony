@@ -14,6 +14,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/user')]
+#[IsGranted('ROLE_ADMIN')]
 class UserController extends AbstractController
 {
     #[Route('/', name: 'user_index', methods: ['GET'])]
@@ -25,7 +26,6 @@ class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'user_new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
@@ -37,7 +37,10 @@ class UserController extends AbstractController
                 $user,
                 $user->getPassword()
             );
-            $user->setPassword($hashedPassword);
+            $user
+                ->setPassword($hashedPassword)
+                ->setRoles(["ROLE_ADMIN"])
+                ->setIsVerified(true);
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -50,34 +53,34 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'user_show', methods: ['GET'])]
-    public function show(User $user): Response
-    {
-        return $this->render('user/show.html.twig', [
-            'user' => $user,
-        ]);
-    }
+    // #[Route('/{id}', name: 'user_show', methods: ['GET'])]
+    // public function show(User $user): Response
+    // {
+    //     return $this->render('user/show.html.twig', [
+    //         'user' => $user,
+    //     ]);
+    // }
 
-    #[Route('/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->getUser() !== $user) {
-            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
-        }
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+    // #[Route('/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
+    // public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    // {
+    //     if ($this->getUser() !== $user) {
+    //         return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+    //     }
+    //     $form = $this->createForm(UserType::class, $user);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->renderForm('user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->renderForm('user/edit.html.twig', [
+    //         'user' => $user,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{id}', name: 'user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response

@@ -22,7 +22,6 @@ class UserType extends AbstractType
             ->add('username');
         if ($this->security->isGranted('ROLE_ADMIN')) {
             $builder
-                ->add('roles')
                 ->add('password');
         }
     }

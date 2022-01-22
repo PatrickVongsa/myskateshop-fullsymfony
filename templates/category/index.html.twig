@@ -1,15 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Category index{% endblock %}
+{% block title %}{{parent()}} - Liste des catégories{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
+	<div class="container content-container">
+		<h1 class="text-primary my-5">Liste des catégories</h1>
+		<div class="row justify-content-end my-3">
+			<div class="col text-end">
+				<a class="btn btn-secondary me-2" href="{{ path('admin') }}">Retour à l'administration</a>
+				<a class="btn btn-success" href="{{ path('category_new') }}">Créer une nouvelle catégorie</a>
+			</div>
+		</div>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Category</th>
+                <th>Catégorie</th>
                 <th>Slug</th>
                 <th>actions</th>
             </tr>
@@ -21,17 +28,16 @@
                 <td>{{ category.category }}</td>
                 <td>{{ category.slug }}</td>
                 <td>
-                    <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
+                    <a class="btn btn-warning" href="{{ path('category_edit', {'id': category.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Pas de catégories trouvées</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('category_new') }}">Create new</a>
+    </div>
 {% endblock %}

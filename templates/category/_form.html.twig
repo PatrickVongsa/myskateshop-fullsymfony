@@ -1,4 +1,20 @@
-{{ form_start(form) }}
+{{ form_start(form, {
+    attr: {
+        class: 'border border-3 rounded-3 mt-2 p-5',
+        'data-text': 'Création de votre compte en cours ...'
+    }
+}) }}
+<h5 class="text-primary mb-4">Renseigner le formulaire :</h5>
+<div class="form-floating mb-3">
+	{{ form_errors(form.category) }}
+	{{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}
+	{{ form_label(form.category) }}
+</div>
+<div class="form mb-3">
+	{{ form_errors(form.imageFile) }}
+	{{ form_label(form.imageFile) }}
+	{{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+</div>
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-primary">{{ button_label|default('Créer') }}</button>
 {{ form_end(form) }}

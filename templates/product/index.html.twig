@@ -1,49 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Product index{% endblock %}
+{% block title %}
+	{{ parent() }}
+	- Liste des produits
+{% endblock %}
 
 {% block body %}
-    <h1>Product index</h1>
+	<div class="container content-container">
+		<h1 class="text-primary my-5">Liste des produits</h1>
+		<div class="row justify-content-end my-3">
+			<div class="col text-end">
+				<a class="btn btn-secondary me-2" href="{{ path('admin') }}">Retour à l'administration</a>
+				<a class="btn btn-success" href="{{ path('product_new') }}">Créer un nouveau produit</a>
+			</div>
+		</div>
+		<table class="table mb-5">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Prix</th>
+					<th>Taille</th>
+					<th>Stock</th>
+					<th>Stock minimum</th>
+					<th>Est en ligne ?</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for product in products %}
+					<tr>
+						<td>{{ product.id }}</td>
+						<td>{{ product.name }}</td>
+						<td>{{ product.description }}</td>
+						<td>{{ product.price|number_format(2, ',', ' ') }} €</td>
+						<td>{{ product.size }}</td>
+						<td>{{ product.stock }}</td>
+						<td>{{ product.minStock }}</td>
+						<td>{{ product.isVisible ? 'Oui' :'<span class="text-danger fw-bold">Non</span>' }}</td>
+						<td>
+							<a class="btn btn-primary" href="{{ path('product_show', {'id': product.id}) }}">Voir</a>
+							<a class="btn btn-warning" href="{{ path('product_edit', {'id': product.id}) }}">Modifier</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="10">no records found</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Size</th>
-                <th>Stock</th>
-                <th>MinStock</th>
-                <th>IsVisible</th>
-                <th>Slug</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for product in products %}
-            <tr>
-                <td>{{ product.id }}</td>
-                <td>{{ product.name }}</td>
-                <td>{{ product.description }}</td>
-                <td>{{ product.price }}</td>
-                <td>{{ product.size }}</td>
-                <td>{{ product.stock }}</td>
-                <td>{{ product.minStock }}</td>
-                <td>{{ product.isVisible ? 'Yes' : 'No' }}</td>
-                <td>{{ product.slug }}</td>
-                <td>
-                    <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
-                    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('product_new') }}">Create new</a>
+	</div>
 {% endblock %}

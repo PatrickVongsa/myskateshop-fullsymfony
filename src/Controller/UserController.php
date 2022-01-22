@@ -61,26 +61,26 @@ class UserController extends AbstractController
     //     ]);
     // }
 
-    // #[Route('/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
-    // public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
-    // {
-    //     if ($this->getUser() !== $user) {
-    //         return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
-    //     }
-    //     $form = $this->createForm(UserType::class, $user);
-    //     $form->handleRequest($request);
+    #[Route('/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->getUser() !== $user) {
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+        }
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
 
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
 
-    //         return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
-    //     }
+            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+        }
 
-    //     return $this->renderForm('user/edit.html.twig', [
-    //         'user' => $user,
-    //         'form' => $form,
-    //     ]);
-    // }
+        return $this->renderForm('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
 
     #[Route('/{id}', name: 'user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response

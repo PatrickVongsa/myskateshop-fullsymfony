@@ -1,4 +1,31 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn btn-primary mb-3">{{ button_label|default('Créer nouvel utilisateur') }}</button>
+{{ form_start(form, {
+						attr: {
+							class: 'border border-3 rounded-3 mt-2 p-5',
+							'data-text': 'Création de votre compte en cours ...'
+						}
+					}) }}
+<h5 class="text-primary mb-4">Renseigner le formulaire :</h5>
+<div class="form-floating mb-3">
+	{{ form_errors(form.email) }}
+	{{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+	{{ form_label(form.email) }}
+</div>
+<div class="form-floating mb-3">
+	{{ form_errors(form.username) }}
+	{{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+	{{ form_label(form.username) }}
+</div>
+{# {% set route_name = app.request.attributes.get('_route') %}
+<pre>
+    {{ dump(route_name) }}
+</pre> #}
+{% if app.request.attributes.get('_route') == 'user_new' %}
+<div class="form-floating mb-3">
+	{{ form_errors(form.password) }}
+	{{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+	{{ form_label(form.password) }}
+</div>
+{% endif %}
+{% do form.password.setRendered() %}
+<button class="btn btn-primary mb-3">{{ button_label|default('Créer nouvel utilisateur') }}</button>
 {{ form_end(form) }}

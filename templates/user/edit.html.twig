@@ -1,13 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}
+	{{ parent() }}
+	- Mettre à jour mes informations
+{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+	<div class="container content-container">
+		<h1 class="text-primary mt-5 mb-3">Mettre à jour mes informations</h1>
+		<div class="row mb-3">
+			<div class="col text-end">
+				{% if is_granted('ROLE_ADMIN') %}
+					<a class="btn btn-secondary" href="{{ path('user_index') }}">Retour à la liste</a>
+				{% else %}
+					<a class="btn btn-secondary" href="{{ path('app_account') }}">Retour à mon compte</a>
+				{% endif %}
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-8">
+				{{ include('user/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+			</div>
+		</div>
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('user_index') }}">back to list</a>
-
-    {{ include('user/_delete_form.html.twig') }}
+	</div>
 {% endblock %}

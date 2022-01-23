@@ -74,8 +74,11 @@ class UserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+            if ($this->security->isGranted('ROLE_ADMIN')) {
+                return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('user/edit.html.twig', [

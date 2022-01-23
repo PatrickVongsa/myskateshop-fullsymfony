@@ -30,13 +30,13 @@ class UserType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Nom utilisateur'
                 ]
-            ])
-                ->add('password', PasswordType::class, [
-                    'attr' => [
-                        'placeholder' => 'Mot de passe'
-                    ],
-                    'label' => 'Mot de passe',
                 ]);
+                // ->add('password', PasswordType::class, [
+                //     'attr' => [
+                //         'placeholder' => 'Mot de passe'
+                //     ],
+                //     'label' => 'Mot de passe',
+                // ]);
 
     }
 

@@ -1,4 +1,15 @@
-{{ form_start(form) }}
+{{ form_start(form, {
+    attr: {
+        class: 'border border-3 rounded-3 mt-2 p-5',
+        'data-text': 'Création de votre compte en cours ...'
+    }
+}) }}
+<h5 class="text-primary mb-4">Sélectionner le status :</h5>
+<div class="form-floating mb-3">
+	{{ form_errors(form.state) }}
+	{{ form_widget(form.state, {'attr': {'class': 'form-select'}}) }}
+	{{ form_label(form.state) }}
+</div>
     {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

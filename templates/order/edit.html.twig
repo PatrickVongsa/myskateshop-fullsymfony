@@ -1,13 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Order{% endblock %}
+{% block title %}
+	{{parent()}}
+	- Modifier
+	{{order.reference}}
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Order</h1>
-
-    {{ include('order/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('order_index') }}">back to list</a>
-
-    {{ include('order/_delete_form.html.twig') }}
-{% endblock %}
+	<div class="container content-container">
+		<h1 class="text-primary mt-5 mb-2">Modifier commande
+			{{order.reference}}</h1>
+		<div class="row mb-3">
+			<div class="col d-flex justify-content-end">
+				<a class="btn btn-secondary me-2" href="{{ path('admin') }}">Retour à l'administration</a>
+			</div>
+		</div>
+		<div class="row mb-5 justify-content-center">
+			<div class="col-6 me-2">
+				<table class="table">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>
+									Commande référence : {{order.reference}} ({{order.state}})
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for orderDetail in order.orderDetails %}
+								<tr>
+									<td>
+										<strong>{{orderDetail.product.name}}</strong>
+									</td>
+									<td>{{orderDetail.quantity}}</td>
+									<td>{{orderDetail.price|number_format(2, '.', ',') }}
+										€</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+						<tfoot class="mb-0">
+							<tr>
+								<th colspan="2" class="text-end">Total de la commande :
+								</th>
+								<th scope="col">{{order.total|number_format(2, '.', ',') }}
+									€</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="col-4">
+					{{ include('order/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+				</div>
+			</div>
+		</div>
+	{% endblock %}

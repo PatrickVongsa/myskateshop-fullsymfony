@@ -14,39 +14,45 @@
 			<div class="col-12 mb-5">
 				<h4 class="text-primary my-2">Tableau de bord</h4>
 				<div class="row row-cols-4">
-					<div class="card col">
-						<a class="text-decoration-none" href="{{ path('order_index') }}">
-							<img src="..." class="card-img-top" alt="...">
-							<div class="card-body">
-								<h5 class="card-title">Commandes</h5>
-								<p class="card-text">{{ orders|length}}</p>
-							</div>
-						</a>
+					<div class="card col text-primary">
+						<div class="text-center">
+							<img src="/build/images/order.png" class="p-3" alt="Icone commande" width="220" height="200">
+						</div>
+						<div class="card-body text-center">
+							<h5 class="card-title">Commandes</h5>
+							<p class="card-text fs-3">{{ orders|length}}</p>
+						</div>
 					</div>
 					<div class="card col">
 						<a class="text-decoration-none" href="{{ path('category_index') }}">
-							<img src="..." class="card-img-top" alt="...">
-							<div class="card-body">
+							<div class="text-center">
+								<img src="/build/images/list.png" class="p-3" alt="Icone menu" width="220" height="200">
+							</div>
+							<div class="card-body text-center">
 								<h5 class="card-title">Catégories</h5>
-								<p class="card-text">{{ categories|length}}</p>
+								<p class="card-text fs-3">{{ categories|length}}</p>
 							</div>
 						</a>
 					</div>
 					<div class="card col">
 						<a class="text-decoration-none" href="{{ path('product_index') }}">
-							<img src="..." class="card-img-top" alt="...">
-							<div class="card-body">
+							<div class="text-center">
+								<img src="/build/images/skateboard.png" class="p-3" alt="Icone skateboard" width="220" height="200">
+							</div>
+							<div class="card-body text-center">
 								<h5 class="card-title">Produits</h5>
-								<p class="card-text">{{ products|length}}</p>
+								<p class="card-text fs-3">{{ products|length}}</p>
 							</div>
 						</a>
 					</div>
 					<div class="card col">
 						<a class="text-decoration-none" href="{{ path('user_index') }}">
-							<img src="..." class="card-img-top" alt="...">
-							<div class="card-body">
+							<div class="text-center">
+								<img src="/build/images/group.png" class="p-3" alt="Icone groupe d'utilisateurs" width="220" height="200">
+							</div>
+							<div class="card-body text-center">
 								<h5 class="card-title">Utilisateurs</h5>
-								<p class="card-text">{{ users|length}}</p>
+								<p class="card-text fs-3">{{ users|length}}</p>
 							</div>
 						</a>
 					</div>
@@ -56,84 +62,45 @@
 				<h4 class="text-primary my-2">Commandes à traiter</h4>
 				<div class="accordion mb-5" id="accordionExample">
 					{% for order in orders %}
-						{% if loop.first %}
-							<div class="accordion-item">
-								<h2 class="accordion-header" id="{{'heading' ~ order.id}}">
-									<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="{{'#collapse' ~ order.id}}" aria-expanded="true" aria-controls="collapseOne">
-										Commande référence :
-										{{order.reference}}
-										({{order.state}})
-									</button>
-								</h2>
-								<div id="{{'collapse' ~ order.id}}" class="accordion-collapse collapse show" aria-labelledby="{{'heading' ~ order.id}}" data-bs-parent="#accordionExample">
-									<div class="accordion-body">
-										<table class="table">
-											<tbody>
-												{% for orderDetail in order.orderDetails %}
+						{% if order.state != 'Envoyée' %}
+								<div class="accordion-item">
+									<h2 class="accordion-header" id="{{'heading' ~ order.id}}">
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="{{'#collapse' ~ order.id}}" aria-expanded="false" aria-controls="collapseTwo">
+											Commande référence :
+											{{order.reference}}
+											({{order.state}})
+										</button>
+									</h2>
+									<div id="{{'collapse' ~ order.id}}" class="accordion-collapse collapse" aria-labelledby="{{'heading' ~ order.id}}" data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<table class="table">
+												<tbody>
+													{% for orderDetail in order.orderDetails %}
+														<tr>
+															<td>
+																<strong>{{orderDetail.product.name}}</strong>
+															</td>
+															<td>{{orderDetail.quantity}}</td>
+															<td>{{orderDetail.price|number_format(2, '.', ',') }}
+																€</td>
+														</tr>
+													{% endfor %}
+												</tbody>
+												<tfoot class="mb-0">
 													<tr>
-														<td>
-															<strong>{{orderDetail.product.name}}</strong>
-														</td>
-														<td>{{orderDetail.quantity}}</td>
-														<td>{{orderDetail.price|number_format(2, '.', ',') }}
-															€</td>
+														<th colspan="2" class="text-end">Total de la commande :
+														</th>
+														<th scope="col">{{order.total|number_format(2, '.', ',') }}
+															€</th>
 													</tr>
-												{% endfor %}
-											</tbody>
-											<tfoot class="mb-0">
-												<tr>
-													<th colspan="2" class="text-end">Total de la commande :
-													</th>
-													<th scope="col">{{order.total|number_format(2, '.', ',') }}
-														€</th>
-												</tr>
-											</tfoot>
-										</table>
-										<div>
-											<a class="btn btn-success" href="{{ path('order_edit', {'id': order.id}) }}">Faire évoluer le status</a>
+												</tfoot>
+											</table>
+											<div>
+												<a class="btn btn-success" href="{{ path('order_edit', {'id': order.id}) }}">Faire évoluer le status</a>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						{% else %}
-							<div class="accordion-item">
-								<h2 class="accordion-header" id="{{'heading' ~ order.id}}">
-									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="{{'#collapse' ~ order.id}}" aria-expanded="false" aria-controls="collapseTwo">
-										Commande référence :
-										{{order.reference}}
-										({{order.state}})
-									</button>
-								</h2>
-								<div id="{{'collapse' ~ order.id}}" class="accordion-collapse collapse" aria-labelledby="{{'heading' ~ order.id}}" data-bs-parent="#accordionExample">
-									<div class="accordion-body">
-										<table class="table">
-											<tbody>
-												{% for orderDetail in order.orderDetails %}
-													<tr>
-														<td>
-															<strong>{{orderDetail.product.name}}</strong>
-														</td>
-														<td>{{orderDetail.quantity}}</td>
-														<td>{{orderDetail.price|number_format(2, '.', ',') }}
-															€</td>
-													</tr>
-												{% endfor %}
-											</tbody>
-											<tfoot class="mb-0">
-												<tr>
-													<th colspan="2" class="text-end">Total de la commande :
-													</th>
-													<th scope="col">{{order.total|number_format(2, '.', ',') }}
-														€</th>
-												</tr>
-											</tfoot>
-										</table>
-										<div>
-											<a class="btn btn-success" href="{{ path('order_edit', {'id': order.id}) }}">Faire évoluer le status</a>
-										</div>
-									</div>
-								</div>
-							</div>
 						{% endif %}
 					{% endfor %}
 				</div>

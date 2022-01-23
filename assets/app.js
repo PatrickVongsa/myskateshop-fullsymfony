@@ -13,3 +13,6 @@ import './bootstrap';
 
 // Import Bootstap
 import 'bootstrap/dist/js/bootstrap';
+
+// import the flash message handler
+import './flash-messages';

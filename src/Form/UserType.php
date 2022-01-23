@@ -35,7 +35,7 @@ class UserType extends AbstractType
                     'attr' => [
                         'placeholder' => 'Mot de passe'
                     ],
-                    'label' => 'Mot de passe'
+                    'label' => 'Mot de passe',
                 ]);
 
     }

@@ -2,7 +2,11 @@
 	{{ render(controller('App\\Controller\\NavbarController::generateNavbar', {'bg': false} )) }}
 	<div class="row justify-content-center align-items-center h-100">
 		<div class="col-5">
-			{{ form_start(searchForm) }}
+			{{ form_start(searchForm, {
+				attr: {
+			'data-text': 'Recherche en cours ...'
+				}
+			}) }}
 			<div class="input-group mb-3">
 				{{ form(searchForm.name) }}
 			{{ form_rest(searchForm) }}

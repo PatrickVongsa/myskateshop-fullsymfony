@@ -24,6 +24,10 @@
 			{{ render(controller('App\\Controller\\NavbarController::generateNavbar', {'bg': true} )) }}
 		{% endif %}
 
+		{% for error  in app.flashes %}
+			<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+		{% endfor %}
+
 		{% block body %}{% endblock %}
 
 		{{ render(controller('App\\Controller\\FooterController::generateFooter')) }}

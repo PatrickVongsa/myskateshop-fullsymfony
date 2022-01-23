@@ -13,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/order')]
@@ -28,7 +30,7 @@ class OrderController extends AbstractController
 
     #[Route('/new', name: 'order_new', methods: ['GET', 'POST'])]
     #[IsGranted("ROLE_USER")]
-    public function new(OrderRepository $orderRepository, ProductRepository $productRepository, SessionInterface $sessionInterface, EntityManagerInterface $entityManager): Response
+    public function new(OrderRepository $orderRepository, ProductRepository $productRepository, SessionInterface $sessionInterface, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         $cart = $sessionInterface->get("cart", []);
         if (!empty($cart)) {
@@ -73,6 +75,15 @@ class OrderController extends AbstractController
                 $entityManager->flush();
 
                 $sessionInterface->remove("cart", []);
+
+            $orderCreated = $orderRepository->findOneBy(['user' => $this->getUser(), 'reference' => date('YmdHi') . $this->getUser()->getId()]);
+                $email = (new Email())
+                ->from('your_email@example.com')
+                ->to($this->getUser()->getEmail())
+                ->subject('Confirmation de votre commande ' . $orderCreated->getReference())
+                ->html($this->renderView('email/new-order-email.html.twig', ['order' => $orderCreated]));
+                $mailer->send($email);
+
             }
             return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);
         }
@@ -89,13 +100,20 @@ class OrderController extends AbstractController
 
     #[Route('/{id}/edit', name: 'order_edit', methods: ['GET', 'POST'])]
     #[IsGranted("ROLE_USER")]
-    public function edit(Request $request, Order $order, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Order $order, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
+            $email = (new Email())
+            ->from('your_email@example.com')
+            ->to($order->getUser()->getEmail())
+            ->subject('Evolution de votre commande ' . $order->getReference())
+            ->html($this->renderView('email/order-status-email.html.twig', ['order' => $order]));
+            $mailer->send($email);
 
             return $this->redirectToRoute('admin', [], Response::HTTP_SEE_OTHER);
         }

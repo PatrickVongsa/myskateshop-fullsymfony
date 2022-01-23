@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Evolution du status de la commande {{ order.reference }}</title>
+	</head>
+
+	<body>
+		<h1>Evolution du status de la commande {{ order.reference }}</h1>
+		<p>Bonjour {{order.user.username}},</p>
+        <p>Le status de votre commande {{order.reference}} a évolué. </p>
+		<p>Status de la commande : {{order.state}}</p>
+        <p>Cordialement,</p>
+        <p>MySkateshop</p>
+	</body>
+
+</html>

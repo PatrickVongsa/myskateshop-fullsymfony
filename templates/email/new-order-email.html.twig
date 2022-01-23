@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Confirmation de commande {{ order.reference }}</title>
+	</head>
+
+	<body>
+		<h1>Confirmation de commande {{ order.reference }}</h1>
+		<p>Bonjour {{order.user.username}},</p>
+		<p>Merci d'avoir effectué une comme chez MySkateshop.</p>
+        <p>
+            Commande référence : {{order.reference}}<br/>
+            Retrouvez les détails de votre commande dans votre espace utilisateur.
+        </p>
+        <p>
+        Total de la commande : {{order.total|number_format(2, ',', ' ') }} €
+        </p>
+        <p>Notre équipe vous tiendra au courant du status de votre commande.</p>
+        <p>Cordialement,</p>
+        <p>MySkateshop</p>
+	</body>
+
+</html>

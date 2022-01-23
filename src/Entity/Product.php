@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 #[Vich\Uploadable]
@@ -19,27 +20,37 @@ class Product
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 1, max: 255)]
     private $name;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank]
     private $description;
 
     #[ORM\Column(type: 'float')]
+    #[Assert\NotBlank]
     private $price;
 
     #[ORM\Column(type: 'float')]
+    #[Assert\NotBlank]
     private $size;
 
     #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank]
     private $stock;
 
     #[ORM\Column(type: 'integer')]
+    #[Assert\NotBlank]
     private $minStock;
 
     #[ORM\Column(type: 'boolean')]
-    private $isVisible;
+    #[Assert\NotBlank]
+    private $isVisible = false;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 1, max: 255)]
     private $slug;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderDetail::class, orphanRemoval: true)]
@@ -53,6 +64,7 @@ class Product
     private $updatedAt;
 
     #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'image')]
+    #[Assert\File(mimeTypes:["image/jpeg", "image/png","image/jpg"])]
     private $imageFile;
 
     #[ORM\Column(type: 'string', length: 255)]

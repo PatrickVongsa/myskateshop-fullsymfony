@@ -6,6 +6,7 @@ use App\Repository\OrderRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: '`order`')]
@@ -17,12 +18,15 @@ class Order
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank]
     private $reference;
 
     #[ORM\Column(type: 'float')]
+    #[Assert\NotBlank]
     private $total;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Choice(['En cours de validation', 'Validée', 'Envoyée'])]
     private $state;
 
     #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderDetail::class, orphanRemoval: true)]

@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Security;
 
-class UserType extends AbstractType
+class UserTypeEdit extends AbstractType
 {
     public function __construct(Security $security)
     {
@@ -30,12 +30,6 @@ class UserType extends AbstractType
                 'attr' => [
                     'placeholder' => 'Nom utilisateur'
                 ]
-                ])
-                ->add('password', PasswordType::class, [
-                    'attr' => [
-                        'placeholder' => 'Mot de passe'
-                    ],
-                    'label' => 'Mot de passe',
                 ]);
 
     }

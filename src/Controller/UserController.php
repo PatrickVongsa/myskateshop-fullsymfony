@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserTypeEdit;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/user')]
 class UserController extends AbstractController
@@ -64,17 +66,18 @@ class UserController extends AbstractController
 
     #[IsGranted('ROLE_USER')]
     #[Route('/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, Security $security): Response
     {
         if ($this->getUser() !== $user) {
             return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
         }
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserTypeEdit::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-            if ($this->security->isGranted('ROLE_ADMIN')) {
+
+            if ($security->isGranted('ROLE_ADMIN')) {
                 return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
             } else {
                 return $this->redirectToRoute('app_account', [], Response::HTTP_SEE_OTHER);

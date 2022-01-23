@@ -23,7 +23,7 @@
 				</div>
 				<div class="mb-2">
 					<a class="btn btn-primary" href="{{ path('user_edit', {'id': user.id}) }}">Modifier mes informations</a>
-					<a class="btn btn-primary" href="{{ path('app_forgot_password_request') }}">Modifier mon mot de passe</a>
+					<a class="btn btn-warning" href="{{ path('app_forgot_password_request') }}">Modifier mon mot de passe</a>
 				</div>
 			</div>
 			<div class="col-6">
@@ -103,6 +103,8 @@
 								</div>
 							</div>
 						{% endif %}
+					{% else %}
+						Pas de commandes passées
 					{% endfor %}
 				</div>
 			</div>

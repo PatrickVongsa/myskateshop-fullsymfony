@@ -63,45 +63,47 @@
 				<div class="accordion mb-5" id="accordionExample">
 					{% for order in orders %}
 						{% if order.state != 'Envoyée' %}
-								<div class="accordion-item">
-									<h2 class="accordion-header" id="{{'heading' ~ order.id}}">
-										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="{{'#collapse' ~ order.id}}" aria-expanded="false" aria-controls="collapseTwo">
-											Commande référence :
-											{{order.reference}}
-											({{order.state}})
-										</button>
-									</h2>
-									<div id="{{'collapse' ~ order.id}}" class="accordion-collapse collapse" aria-labelledby="{{'heading' ~ order.id}}" data-bs-parent="#accordionExample">
-										<div class="accordion-body">
-											<table class="table">
-												<tbody>
-													{% for orderDetail in order.orderDetails %}
-														<tr>
-															<td>
-																<strong>{{orderDetail.product.name}}</strong>
-															</td>
-															<td>{{orderDetail.quantity}}</td>
-															<td>{{orderDetail.price|number_format(2, '.', ',') }}
-																€</td>
-														</tr>
-													{% endfor %}
-												</tbody>
-												<tfoot class="mb-0">
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="{{'heading' ~ order.id}}">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="{{'#collapse' ~ order.id}}" aria-expanded="false" aria-controls="collapseTwo">
+										Commande référence :
+										{{order.reference}}
+										({{order.state}})
+									</button>
+								</h2>
+								<div id="{{'collapse' ~ order.id}}" class="accordion-collapse collapse" aria-labelledby="{{'heading' ~ order.id}}" data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<table class="table">
+											<tbody>
+												{% for orderDetail in order.orderDetails %}
 													<tr>
-														<th colspan="2" class="text-end">Total de la commande :
-														</th>
-														<th scope="col">{{order.total|number_format(2, '.', ',') }}
-															€</th>
+														<td>
+															<strong>{{orderDetail.product.name}}</strong>
+														</td>
+														<td>{{orderDetail.quantity}}</td>
+														<td>{{orderDetail.price|number_format(2, '.', ',') }}
+															€</td>
 													</tr>
-												</tfoot>
-											</table>
-											<div>
-												<a class="btn btn-success" href="{{ path('order_edit', {'id': order.id}) }}">Faire évoluer le status</a>
-											</div>
+												{% endfor %}
+											</tbody>
+											<tfoot class="mb-0">
+												<tr>
+													<th colspan="2" class="text-end">Total de la commande :
+													</th>
+													<th scope="col">{{order.total|number_format(2, '.', ',') }}
+														€</th>
+												</tr>
+											</tfoot>
+										</table>
+										<div>
+											<a class="btn btn-success" href="{{ path('order_edit', {'id': order.id}) }}">Faire évoluer le status</a>
 										</div>
 									</div>
 								</div>
+							</div>
 						{% endif %}
+					{% else %}
+						Pas de commandes à traiter
 					{% endfor %}
 				</div>
 			</div>

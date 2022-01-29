@@ -8,21 +8,23 @@
 
 {% block body %}
 	<div class="container content-container">
-		<div class="row justify-content-center mb-5">
+		<div class="row justify-content-center">
 			<div class="col-12 my-5">
-				<h1>Détail produit</h1>
+				<h1 class="text-primary">Détail produit</h1>
 			</div>
-			<div class="col-4 text-center">
-				<img class="border border-secondary rounded-2 p-2" src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="image d'un {{ product.category.category }}" width="400" height="400">
+		</div>
+		<div class="row mb-5 justify-content-center">
+			<div class="col col-md-6 col-lg-5 text-center">
+				<img id="image-product" class="border border-secondary rounded-2 p-2" src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="image d'un {{ product.category.category }}">
 			</div>
-			<div class="col-4">
+			<div class="col col-md-6 col-lg-5">
 				<div class="row my-2">
-					<div class="col-8">
+					<div class="col-7">
 						<h4>
 							{{ product.name }}
 						</h4>
 					</div>
-					<div class="col-4">
+					<div class="col-5">
 						<h4 class="text-primary">
 							{{ product.price|number_format(2, ',', ' ')  }}
 							€
@@ -31,24 +33,24 @@
 				</div>
 				<div class="row mt-2 mb-5">
 					<div class="col">
-					<h5>Description :</h5>
-					<p>
-						{{ product.description }}
-					</p>
+						<h5>Description :</h5>
+						<p>
+							{{ product.description }}
+						</p>
 					</div>
 				</div>
 				<div class="row my-2">
-					<div class="col-12 mb-3">
-					<form action="{{path('cart_add', {'id': product.id }) }}" method="post">
-						<div class="col-3 d-flex align-items-center">
-							<label for="formGroupExampleInput" class="form-label m-0">Quantité</label>
-							<input type="number" name="quantity" class="form-control col-3 ms-5" id="formGroupExampleInput" value="1" min="1" max="{{product.stock}}">
-						</div>
+					<div class="col-12">
+						<form action="{{path('cart_add', {'id': product.id }) }}" method="post" data-text="Ajout article dans le panier">
+							<div class="col-3 d-flex align-items-center mb-3">
+								<label for="formGroupExampleInput" class="form-label m-0">Quantité</label>
+								<input type="number" name="quantity" class="form-control col-3 ms-5" id="formGroupExampleInput" value="1" min="1" max="{{product.stock}}">
+							</div>
+							<div class="col	">
+								<button type="submit" class="btn btn-primary">Ajouter au panier</button>
+							</div>
+						</form>
 					</div>
-					<div class="col	">
-						<button type="submit" class="btn btn-primary">Ajouter au panier</button>
-					</div>
-					<form>
 				</div>
 			</div>
 		</div>

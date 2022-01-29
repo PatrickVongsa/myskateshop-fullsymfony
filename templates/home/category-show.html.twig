@@ -11,7 +11,7 @@
 		<div class="mt-5">
 			<h1 class="text-primary">{{category.category}}</h1>
 		</div>
-		<div class="row row-cols-4 g-3 mt-2 mb-5">
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 mt-2 mb-5">
 			{% for product in category.products %}
 			{% if product.isVisible == true and product.stock > 0 %}
 				<a class="col text-decoration-none" href="{{ path("app_product_detail", {'category_slug': category.slug, 'product_slug': product.slug}) }}">

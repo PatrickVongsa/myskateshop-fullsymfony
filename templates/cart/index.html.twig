@@ -7,12 +7,12 @@
 
 {% block body %}
 	<div class="container content-container">
-		<div class="row">
+		<div class="row justify-content-center">
 			<div class="col-12">
 				<h1 class="text-primary my-5">Mon panier</h1>
 			</div>
-			<div class="row justify-content-center">
-				<div class="col d-flex flex-wrap flex-column justify-content-start">
+			{# <div class="row justify-content-center"> #}
+				<div class="col-12 col-md-7 col-lg-5 d-flex flex-wrap flex-column justify-content-start">
 					{% for product in dataCart %}
 						{% include "components/_cart-product-show.html.twig" %}
 					{% else %}
@@ -23,7 +23,7 @@
 						</div>
 					{% endfor %}
 				</div>
-				<div class="col">
+				<div class="col-12 col-md-5 col-lg-5">
 					<div class="card text-center">
 						<div class="card-header">
 							Informations du panier
@@ -41,7 +41,7 @@
 							</a>
 						</div>
 					</div>
-				</div>
+				{# </div> #}
 			</div>
 		</div>
 	</div>

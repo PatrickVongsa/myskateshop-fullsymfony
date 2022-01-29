@@ -8,38 +8,39 @@
 		<h1 class="text-primary mt-5 mb-3">Utilisateurs</h1>
 		<div class="row mb-3">
 			<div class="col text-end">
-				<a class="btn btn-secondary me-2" href="{{ path('admin') }}">Retour à l'administration</a>
+				<a class="btn btn-secondary me-0 me-md-2 mb-2 mb-md-0" href="{{ path('admin') }}">Retour à l'administration</a>
 				<a class="btn btn-success" href="{{ path('user_new') }}">Créer un nouvel admin</a>
 			</div>
 		</div>
-
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>E-mail</th>
-					<th>Nom utilisateur</th>
-					<th>Vérifié</th>
-					<th>actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for user in users %}
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
 					<tr>
-						<td>{{ user.id }}</td>
-						<td>{{ user.email }}</td>
-						<td>{{ user.username }}</td>
-						<td>{{ user.isVerified ? 'oui' : 'non' }}</td>
-						<td>
-							{{ include('user/_delete_form.html.twig') }}
-						</td>
+						<th>Id</th>
+						<th>E-mail</th>
+						<th>Nom utilisateur</th>
+						<th>Vérifié</th>
+						<th>actions</th>
 					</tr>
-				{% else %}
-					<tr>
-						<td colspan="6">no records found</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					{% for user in users %}
+						<tr>
+							<td>{{ user.id }}</td>
+							<td>{{ user.email }}</td>
+							<td>{{ user.username }}</td>
+							<td>{{ user.isVerified ? 'oui' : 'non' }}</td>
+							<td>
+								{{ include('user/_delete_form.html.twig') }}
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="6">Pas d'utilisateurs trouvés</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 {% endblock %}

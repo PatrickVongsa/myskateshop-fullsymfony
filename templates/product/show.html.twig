@@ -8,7 +8,7 @@
 
 {% block body %}
 	<div class="container content-container">
-		<h1 class="text-primary mt-5 mb-2">Détails
+		<h1 class="text-primary my-5">Détails
 			{{product.name}}</h1>
 		<div class="row">
 			<div class="col d-flex justify-content-end">
@@ -17,11 +17,11 @@
 				{{ include('product/_delete_form.html.twig') }}
 			</div>
 		</div>
-    <div class="row">
-    <div class="col-3 mt-3">
+    <div class="row justify-content-center my-5">
+    <div class="col-12 col-md-6 col-lg-3 mt-3 mb-3 mb-md-0">
         {% include "components/_card-product-show.html.twig" %}
     </div>
-    <div class="col-8">
+    <div class="col-12 col-md-6 col-lg-8">
 		<table class="table">
 			<tbody>
 				<tr>

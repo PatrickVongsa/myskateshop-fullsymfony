@@ -11,7 +11,7 @@
 			<div class="col-12">
 				<h1 class="text-primary my-5">Mon compte</h1>
 			</div>
-			<div class="col-6">
+			<div class="col-12 col-md-6">
 				<h4 class="text-primary my-2">Mes informations personnelles</h4>
 				<div class="mb-2">
 					<h5>Nom d'utilisateur</h5>
@@ -22,11 +22,11 @@
 					<p>{{user.email}}</p>
 				</div>
 				<div class="mb-2">
-					<a class="btn btn-primary" href="{{ path('user_edit', {'id': user.id}) }}">Modifier mes informations</a>
-					<a class="btn btn-warning" href="{{ path('app_forgot_password_request') }}">Modifier mon mot de passe</a>
+					<a class="btn btn-primary mb-1" href="{{ path('user_edit', {'id': user.id}) }}">Modifier mes informations</a>
+					<a class="btn btn-warning mb-1" href="{{ path('app_forgot_password_request') }}">Modifier mon mot de passe</a>
 				</div>
 			</div>
-			<div class="col-6">
+			<div class="col-12 col-md-6">
 				<h4 class="text-primary my-2">Mes commandes</h4>
 				<div class="accordion mb-5" id="accordionExample">
 					{% for order in user.orders %}

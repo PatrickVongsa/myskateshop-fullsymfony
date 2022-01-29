@@ -10,47 +10,49 @@
 		<h1 class="text-primary my-5">Liste des produits</h1>
 		<div class="row justify-content-end my-3">
 			<div class="col text-end">
-				<a class="btn btn-secondary me-2" href="{{ path('admin') }}">Retour à l'administration</a>
+				<a class="btn btn-secondary me-0 me-md-2 mb-2 mb-md-0" href="{{ path('admin') }}">Retour à l'administration</a>
 				<a class="btn btn-success" href="{{ path('product_new') }}">Créer un nouveau produit</a>
 			</div>
 		</div>
-		<table class="table mb-5">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Name</th>
-					<th>Description</th>
-					<th>Prix</th>
-					<th>Taille</th>
-					<th>Stock</th>
-					<th>Stock minimum</th>
-					<th>Est en ligne ?</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for product in products %}
+		<div class="table-responsive">
+			<table class="table mb-5">
+				<thead>
 					<tr>
-						<td>{{ product.id }}</td>
-						<td>{{ product.name }}</td>
-						<td>{{ product.description }}</td>
-						<td>{{ product.price|number_format(2, ',', ' ') }} €</td>
-						<td>{{ product.size }}</td>
-						<td>{{ product.stock }}</td>
-						<td>{{ product.minStock }}</td>
-						<td>{{ product.isVisible ? 'Oui' :'<span class="text-danger fw-bold">Non</span>' }}</td>
-						<td>
-							<a class="btn btn-primary" href="{{ path('product_show', {'id': product.id}) }}">Voir</a>
-							<a class="btn btn-warning" href="{{ path('product_edit', {'id': product.id}) }}">Modifier</a>
-						</td>
+						<th>Id</th>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Prix</th>
+						<th>Taille</th>
+						<th>Stock</th>
+						<th>Stock minimum</th>
+						<th>Est en ligne ?</th>
+						<th>Actions</th>
 					</tr>
-				{% else %}
-					<tr>
-						<td colspan="10">no records found</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-
+				</thead>
+				<tbody>
+					{% for product in products %}
+						<tr>
+							<td>{{ product.id }}</td>
+							<td>{{ product.name }}</td>
+							<td>{{ product.description }}</td>
+							<td>{{ product.price|number_format(2, ',', ' ') }}
+								€</td>
+							<td>{{ product.size }}</td>
+							<td>{{ product.stock }}</td>
+							<td>{{ product.minStock }}</td>
+							<td>{{ product.isVisible ? 'Oui' :'<span class="text-danger fw-bold">Non</span>' }}</td>
+							<td>
+								<a class="btn btn-primary" href="{{ path('product_show', {'id': product.id}) }}">Voir</a>
+								<a class="btn btn-warning" href="{{ path('product_edit', {'id': product.id}) }}">Modifier</a>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="10">no records found</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
 	</div>
 {% endblock %}

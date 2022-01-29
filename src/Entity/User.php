@@ -35,7 +35,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank]
-    #[Assert\Length(min: 1, max: 255, message: 'Votre nom d\'utilisateur doit être entre 1 et 255 caractères')]
+    #[Assert\Length(min: 1, max: 255)]
     private $username;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Order::class, orphanRemoval: true)]
